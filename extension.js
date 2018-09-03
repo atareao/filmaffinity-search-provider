@@ -1,27 +1,27 @@
 /*
- * YouTube Search Provider
- * An extension to search videos in YouTube with GNOME Shell
+ * Meneame Search Provider
+ * An extension to search videos in Meneame with GNOME Shell
  *
  * Copyright (C) 2018
  *     Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>,
  * https://www.atareao.es
  *
- * This file is part of YouTube Search Provider
+ * This file is part of Meneame Search Provider
  * 
- * YouTube Search Provider is free software: you can redistribute it and/or modify
+ * Meneame Search Provider is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * YouTube Search Provider is distributed in the hope that it will be useful,
+ * Meneame Search Provider is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with gnome-shell-extension-openweather.
+ * along with this extensions.
  * If not, see <http://www.gnu.org/licenses/>.
-  */
+ */
 
 const St = imports.gi.St;
 const Main = imports.ui.main;
@@ -33,13 +33,13 @@ const GdkPixbuf = imports.gi.GdkPixbuf;
 const Util = imports.misc.util;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
-const YouTubeClient = Extension.imports.youtube_client;
+const MeneameClient = Extension.imports.meneame_client;
 const Convenience = Extension.imports.convenience;
 
 const Gettext = imports.gettext.domain(Extension.metadata.uuid);
 const _ = Gettext.gettext;
 
-class YouTubeSearchProvider{
+class MeneameSearchProvider{
     constructor(){
 
         //this._settings = Convenience.getSettings();
@@ -50,31 +50,37 @@ class YouTubeSearchProvider{
         this.appInfo = Gio.AppInfo.get_default_for_uri_scheme('https');
         // Fake the name and icon of the app
         this.appInfo.get_name = ()=>{
-            return 'YouTube Search Provider';
+            return 'Meneame Search Provider';
         };
         this.appInfo.get_icon = ()=>{
-            return new Gio.ThemedIcon({name: "youtube"});
+            return new Gio.ThemedIcon({name: "meneame"});
         };
 
         // Custom messages that will be shown as search results
         this._messages = {
             '__loading__': {
                 id: '__loading__',
-                name: _('YouTube'),
-                description : _('Loading items from YouTube, please wait...'),
+                name: _('Meneame'),
+                description : _('Loading items from Meneame, please wait...'),
                 // TODO: do these kinds of icon creations better
                 createIcon: this.createIcon
             },
             '__error__': {
                 id: '__error__',
-                name: _('YouTube'),
+                name: _('Meneame'),
                 description : _('Oops, an error occurred while searching.'),
+                createIcon: this.createIcon
+            },
+            '__nothing_found__': {
+                id: '__nothing_found__',
+                name: _('Meneame'),
+                description : _('Oops, I did\'nt found what you are looking for.'),
                 createIcon: this.createIcon
             }
         };
         // API results will be stored here
         this.resultsMap = new Map();
-        this._api = new YouTubeClient.YouTubeClient();
+        this._api = new MeneameClient.MeneameClient();
         // Wait before making an API request
         this._timeoutId = 0;
 
@@ -99,49 +105,12 @@ class YouTubeSearchProvider{
      */
     activateResult(identifier, terms, timestamp) {
         let result;
-        let command = '';
         // only do something if the result is not a custom message
         if (!(identifier in this._messages)) {
             result = this.resultsMap.get(identifier);
             if (result) {
-                let settings = Convenience.getSettings();
-                let viewer = settings.get_enum('viewer');
-                switch(viewer) {
-                    case 0:
-                        if(Gio.File.new_for_path('/usr/bin/vlc').query_exists(null)){
-                            command = '/usr/bin/vlc --one-instance "https://www.youtube.com/watch?v=%s"';
-                        }
-                        break;
-                    case 1:
-                        if(Gio.File.new_for_path('/usr/bin/minitube').query_exists(null)){
-                            command = '/usr/bin/minitube "https://www.youtube.com/watch?v=%s"';
-                        }
-                        break;
-                    case 2:
-                        if(Gio.File.new_for_path('/usr/bin/smplayer').query_exists(null)){
-                            command = '/usr/bin/smplayer "https://www.youtube.com/watch?v=%s"';
-                        }
-                        break;
-                    case 3:
-                        if(Gio.File.new_for_path('/usr/bin/umplayer').query_exists(null)){
-                            command = '/usr/bin/umplayer "https://www.youtube.com/watch?v=%s"';
-                        }
-                        break;
-                    case 4:
-                        if(Gio.File.new_for_path('/usr/bin/totem').query_exists(null)){
-                            command = '/usr/bin/totem "https://www.youtube.com/watch?v=%s"';
-                        }
-                        break;
-                    case 5:
-                        if(Gio.File.new_for_path('/usr/bin/miro').query_exists(null)){
-                            command = '/usr/bin/miro "https://www.youtube.com/watch?v=%s"';
-                        }
-                        break;
-                }
-                if(command == ''){
-                    command = 'xdg-open https://www.youtube.com/watch?v=%s';
-                }
-                Util.trySpawnCommandLine(command.format(result.url));
+                Util.trySpawnCommandLine(
+                    "xdg-open " + result.url);
             }
         }
     }
@@ -152,7 +121,7 @@ class YouTubeSearchProvider{
      */
     getResultMetas(identifiers, callback) {
         let metas = [];
-
+        let scale_factor = St.ThemeContext.get_for_stage(global.stage).scale_factor;
         for (let i = 0; i < identifiers.length; i++) {
             let result;
             // return predefined message if it exists
@@ -169,11 +138,10 @@ class YouTubeSearchProvider{
                         createIcon: (size)=>{
                             let box = new Clutter.Box();
                             /*
-                            let icon = new St.Icon({gicon: new Gio.ThemedIcon({name: 'youtube'}),
+                            let icon = new St.Icon({gicon: new Gio.ThemedIcon({name: 'meneame'}),
                                                     icon_size: size});
                             box.add_child(icon);
                             */
-                            let scale_factor = St.ThemeContext.get_for_stage(global.stage).scale_factor;
                             let image_file = Gio.file_new_for_uri( meta.thumbnail_url);
                             let texture_cache = St.TextureCache.get_default();
                             let icon = texture_cache.load_file_async(
@@ -183,6 +151,7 @@ class YouTubeSearchProvider{
                                 scale_factor
                             );
                             box.add_child(icon);
+                            box.set_size(155,155);
                             return box;
                         }
                     });
@@ -200,12 +169,8 @@ class YouTubeSearchProvider{
      * @param {Gio.Cancellable} cancellable
      */
     getInitialResultSet(terms, callback, cancellable) {
-        // terms holds array of search items
-        // The first term must start with a 'wd' (=wikidata).
-        // It can be of the form 'wd', 'wd-en', 'wd-ru'. The part after
-        // the dash is the search language.
 
-        if (terms != null && terms.length >= 1) {
+        if (terms != null && terms.length > 0 && terms[0].substring(0, 2) === 'm:') {
             // show the loading message
             this.showMessage('__loading__', callback);
             // remove previous timeout
@@ -281,11 +246,15 @@ class YouTubeSearchProvider{
     _getResultSet(error, result, callback, timeoutId) {
         let results = [];
         if (timeoutId === this._timeoutId && result && result.length > 0) {
-            result.forEach((aresult) => {
-                this.resultsMap.set(aresult.id, aresult);
-                results.push(aresult.id);
-            });
-            callback(results);
+            if(result.length > 0){
+                result.forEach((aresult) => {
+                    this.resultsMap.set(aresult.id, aresult);
+                    results.push(aresult.id);
+                });
+                callback(results);
+            }else{
+                this.showMessage('__nothing_found__', callback);
+            }
         } else if (error) {
             // Let the user know that an error has occurred.
             this.showMessage('__error__', callback);
@@ -299,33 +268,33 @@ class YouTubeSearchProvider{
      */
     createIcon(size) {
         let box = new Clutter.Box();
-        let icon = new St.Icon({gicon: new Gio.ThemedIcon({name: 'youtube'}),
+        let icon = new St.Icon({gicon: new Gio.ThemedIcon({name: 'meneame'}),
                                 icon_size: size});
         box.add_child(icon);
         return box;
     }
 }
 
-let youTubeSearchProvider = null;
+let meneameSearchProvider = null;
 
 function init() {
     Convenience.initTranslations();
 }
 
 function enable() {
-    if (!youTubeSearchProvider) {
-        youTubeSearchProvider = new YouTubeSearchProvider();
+    if (!meneameSearchProvider) {
+        meneameSearchProvider = new MeneameSearchProvider();
         Main.overview.viewSelector._searchResults._registerProvider(
-            youTubeSearchProvider
+            meneameSearchProvider
         );
     }
 }
 
 function disable() {
-    if (youTubeSearchProvider){
+    if (meneameSearchProvider){
         Main.overview.viewSelector._searchResults._unregisterProvider(
-            youTubeSearchProvider
+            meneameSearchProvider
         );
-        youTubeSearchProvider = null;
+        meneameSearchProvider = null;
     }
 }

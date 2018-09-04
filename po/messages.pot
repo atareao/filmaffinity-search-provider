@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-02 22:00+0200\n"
+"POT-Creation-Date: 2018-09-04 06:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,64 +17,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:45
-msgid "Default"
-msgstr ""
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:46
-msgid "The main page when no search"
-msgstr ""
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:50
-msgid "Links"
-msgstr ""
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:51
-msgid "Where to search"
-msgstr ""
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:55
-msgid "Fields"
-msgstr ""
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:56
-msgid "In which field look for the word"
-msgstr ""
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:60
-msgid "Status"
-msgstr ""
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:61
-msgid "The status of the element where we are looking for"
-msgstr ""
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:65
-msgid "Periode"
-msgstr ""
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:66
-msgid "The time when the meneame was done"
-msgstr ""
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:70
+#: schemas/es.atareao.filmaffinity-search-provider.gschema.xml:10
 msgid "Order"
 msgstr ""
 
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:71
-msgid "How to order the results by relevance or by date"
+#: schemas/es.atareao.filmaffinity-search-provider.gschema.xml:11
+msgid "Order the results by relevance or by date"
 msgstr ""
 
-#: extension.js:63 extension.js:70
-msgid "Meneame"
+#: extension.js:63 extension.js:70 extension.js:76
+msgid "Filmaffinity"
 msgstr ""
 
 #: extension.js:64
-msgid "Loading items from Meneame, please wait..."
+msgid "Loading items from Filmaffinity, please wait..."
 msgstr ""
 
 #: extension.js:71
 msgid "Oops, an error occurred while searching."
+msgstr ""
+
+#: extension.js:77
+msgid "Oops, I did'nt found what you are looking for."
 msgstr ""
 
 #: preferenceswidget.js:168
@@ -90,7 +54,7 @@ msgid "False"
 msgstr ""
 
 #: prefs.js:60
-msgid "Meneame Search Provider"
+msgid "Filmaffinity Search Provider"
 msgstr ""
 
 #: prefs.js:65
@@ -155,6 +119,6 @@ msgstr ""
 msgid "Search options"
 msgstr ""
 
-#: prefs.js:135
+#: prefs.js:130
 msgid "About"
 msgstr ""

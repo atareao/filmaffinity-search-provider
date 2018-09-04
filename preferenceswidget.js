@@ -1,19 +1,19 @@
 /*
- * Meneame Search Provider
- * An extension to search videos in Meneame with GNOME Shell
+ * Filmaffinity Search Provider
+ * An extension to search videos in Filmaffinity with GNOME Shell
  *
  * Copyright (C) 2018
- *     Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>,
+ * Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>,
  * https://www.atareao.es
  *
- * This file is part of Meneame Search Provider
+ * This file is part of Filmaffinity Search Provider
  * 
- * Meneame Search Provider is free software: you can redistribute it and/or modify
+ * Filmaffinity Search Provider is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Meneame Search Provider is distributed in the hope that it will be useful,
+ * Filmaffinity Search Provider is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.

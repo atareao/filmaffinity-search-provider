@@ -1,19 +1,19 @@
 /*
- * Meneame Search Provider
- * An extension to search videos in Meneame with GNOME Shell
+ * Filmaffinity Search Provider
+ * An extension to search videos in Filmaffinity with GNOME Shell
  *
  * Copyright (C) 2018
- *     Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>,
+ * Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>,
  * https://www.atareao.es
  *
- * This file is part of Meneame Search Provider
+ * This file is part of Filmaffinity Search Provider
  * 
- * Meneame Search Provider is free software: you can redistribute it and/or modify
+ * Filmaffinity Search Provider is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Meneame Search Provider is distributed in the hope that it will be useful,
+ * Filmaffinity Search Provider is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -33,13 +33,13 @@ const GdkPixbuf = imports.gi.GdkPixbuf;
 const Util = imports.misc.util;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
-const MeneameClient = Extension.imports.meneame_client;
+const FilmaffinityClient = Extension.imports.filmaffinity_client;
 const Convenience = Extension.imports.convenience;
 
 const Gettext = imports.gettext.domain(Extension.metadata.uuid);
 const _ = Gettext.gettext;
 
-class MeneameSearchProvider{
+class FilmaffinitySearchProvider{
     constructor(){
 
         //this._settings = Convenience.getSettings();
@@ -50,53 +50,43 @@ class MeneameSearchProvider{
         this.appInfo = Gio.AppInfo.get_default_for_uri_scheme('https');
         // Fake the name and icon of the app
         this.appInfo.get_name = ()=>{
-            return 'Meneame Search Provider';
+            return 'Filmaffinity Search Provider';
         };
         this.appInfo.get_icon = ()=>{
-            return new Gio.ThemedIcon({name: "meneame"});
+            return new Gio.ThemedIcon({name: "filmaffinity"});
         };
 
         // Custom messages that will be shown as search results
         this._messages = {
             '__loading__': {
                 id: '__loading__',
-                name: _('Meneame'),
-                description : _('Loading items from Meneame, please wait...'),
+                name: _('Filmaffinity'),
+                description : _('Loading items from Filmaffinity, please wait...'),
                 // TODO: do these kinds of icon creations better
                 createIcon: this.createIcon
             },
             '__error__': {
                 id: '__error__',
-                name: _('Meneame'),
+                name: _('Filmaffinity'),
                 description : _('Oops, an error occurred while searching.'),
                 createIcon: this.createIcon
             },
             '__nothing_found__': {
                 id: '__nothing_found__',
-                name: _('Meneame'),
+                name: _('Filmaffinity'),
                 description : _('Oops, I did\'nt found what you are looking for.'),
                 createIcon: this.createIcon
             }
         };
         // API results will be stored here
         this.resultsMap = new Map();
-        this._api = new MeneameClient.MeneameClient();
+        this._api = new FilmaffinityClient.FilmaffinityClient();
         // Wait before making an API request
         this._timeoutId = 0;
 
 
     }
 
-    /**
-     * Launch the search in the default app (i.e. browser)
-     * @param {String[]} terms
-     */
-    /*
-    launchSearch(terms) {
-        Util.trySpawnCommandLine(
-            "xdg-open " + this._api.getFullSearchUrl(this._getQuery(terms)));
-    }
-    */
     /**
      * Open the url in default app
      * @param {String} identifier
@@ -138,7 +128,7 @@ class MeneameSearchProvider{
                         createIcon: (size)=>{
                             let box = new Clutter.Box();
                             /*
-                            let icon = new St.Icon({gicon: new Gio.ThemedIcon({name: 'meneame'}),
+                            let icon = new St.Icon({gicon: new Gio.ThemedIcon({name: 'filmaffinity'}),
                                                     icon_size: size});
                             box.add_child(icon);
                             */
@@ -151,7 +141,7 @@ class MeneameSearchProvider{
                                 scale_factor
                             );
                             box.add_child(icon);
-                            box.set_size(155,155);
+                            box.set_size(100,150);
                             return box;
                         }
                     });
@@ -170,7 +160,7 @@ class MeneameSearchProvider{
      */
     getInitialResultSet(terms, callback, cancellable) {
 
-        if (terms != null && terms.length > 0 && terms[0].substring(0, 2) === 'm:') {
+        if (terms != null && terms.length > 0 && terms[0].substring(0, 2) === 'f:') {
             // show the loading message
             this.showMessage('__loading__', callback);
             // remove previous timeout
@@ -222,8 +212,8 @@ class MeneameSearchProvider{
      */
     filterResults(results, max) {
         // override max for now
-        max = this._api.limit;
-        return results.slice(0, max);
+        //max = this._api.limit;
+        return results.slice(0, 5);
     }
 
     /**
@@ -244,10 +234,14 @@ class MeneameSearchProvider{
      * @private
      */
     _getResultSet(error, result, callback, timeoutId) {
+        log('FFFF: 01');
         let results = [];
         if (timeoutId === this._timeoutId && result && result.length > 0) {
+            log('FFFF: 02');
             if(result.length > 0){
+                log('FFFF: 03');
                 result.forEach((aresult) => {
+                    log('FFFF: 04');
                     this.resultsMap.set(aresult.id, aresult);
                     results.push(aresult.id);
                 });
@@ -268,33 +262,33 @@ class MeneameSearchProvider{
      */
     createIcon(size) {
         let box = new Clutter.Box();
-        let icon = new St.Icon({gicon: new Gio.ThemedIcon({name: 'meneame'}),
+        let icon = new St.Icon({gicon: new Gio.ThemedIcon({name: 'filmaffinity'}),
                                 icon_size: size});
         box.add_child(icon);
         return box;
     }
 }
 
-let meneameSearchProvider = null;
+let filmaffinitySearchProvider = null;
 
 function init() {
     Convenience.initTranslations();
 }
 
 function enable() {
-    if (!meneameSearchProvider) {
-        meneameSearchProvider = new MeneameSearchProvider();
+    if (!filmaffinitySearchProvider) {
+        filmaffinitySearchProvider = new FilmaffinitySearchProvider();
         Main.overview.viewSelector._searchResults._registerProvider(
-            meneameSearchProvider
+            filmaffinitySearchProvider
         );
     }
 }
 
 function disable() {
-    if (meneameSearchProvider){
+    if (filmaffinitySearchProvider){
         Main.overview.viewSelector._searchResults._unregisterProvider(
-            meneameSearchProvider
+            filmaffinitySearchProvider
         );
-        meneameSearchProvider = null;
+        filmaffinitySearchProvider = null;
     }
 }

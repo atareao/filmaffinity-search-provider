@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="filmaffinity-search-provider@atareao.es">
+    <enum id="es.atareao.filmaffinity-search-provider.order">
+        <value value="0" nick="relevance"/>
+        <value value="1" nick="year"/>
+    </enum>
+    <schema path="/es/atareao/filmaffinity-search-provider/" id="es.atareao.filmaffinity-search-provider">
+        <key name="order" enum="es.atareao.filmaffinity-search-provider.order">
+            <default>'relevance'</default>
+            <summary>Order</summary>
+            <description>Order the results by relevance or by date</description>
+        </key>
+    </schema>
+</schemalist>

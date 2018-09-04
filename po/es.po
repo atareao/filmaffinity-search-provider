@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WordReference Search Provider - 1\n"
+"Project-Id-Version: Filmaffinity Search Provider - 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-02 22:00+0200\n"
+"POT-Creation-Date: 2018-09-04 06:23+0200\n"
 "PO-Revision-Date: 2018-06-02 19:46+0200\n"
 "Last-Translator: Lorenzo <lorenzo.carbonell.cerezo@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -17,65 +17,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:45
-msgid "Default"
-msgstr "Defecto"
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:46
-msgid "The main page when no search"
-msgstr "La página principal cuando no hay cadena de búsqueda"
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:50
-msgid "Links"
-msgstr "Enlaces"
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:51
-msgid "Where to search"
-msgstr "Donde buscar"
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:55
-msgid "Fields"
-msgstr "Campos"
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:56
-msgid "In which field look for the word"
-msgstr "En que campo buscar"
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:60
-msgid "Status"
-msgstr "Estado"
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:61
-msgid "The status of the element where we are looking for"
-msgstr "El estado del elemento que estamos buscando"
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:65
-msgid "Periode"
-msgstr "Período"
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:66
-msgid "The time when the meneame was done"
-msgstr "Cuanto tiempo pasó desde el meneo"
-
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:70
+#: schemas/es.atareao.filmaffinity-search-provider.gschema.xml:10
 msgid "Order"
 msgstr "Orden"
 
-#: schemas/es.atareao.meneame-search-provider.gschema.xml:71
-msgid "How to order the results by relevance or by date"
+#: schemas/es.atareao.filmaffinity-search-provider.gschema.xml:11
+msgid "Order the results by relevance or by date"
 msgstr "Como ordenar los resultados por relevancia o por fecha"
 
-#: extension.js:63 extension.js:70
-msgid "Meneame"
-msgstr "Meneame"
+#: extension.js:63 extension.js:70 extension.js:76
+msgid "Filmaffinity"
+msgstr "Filmaffinity"
 
 #: extension.js:64
-msgid "Loading items from Meneame, please wait..."
-msgstr "Cargando meneos de Menéame, por favor espera..."
+msgid "Loading items from Filmaffinity, please wait..."
+msgstr "Cargando películas de Filmaffinity, por favor espera..."
 
 #: extension.js:71
 msgid "Oops, an error occurred while searching."
 msgstr "Ups!, ha ocurrido un error mientras buscaba..."
+
+#: extension.js:77
+msgid "Oops, I did'nt found what you are looking for."
+msgstr "Ups!, No encuentro lo que buscas."
 
 #: preferenceswidget.js:168
 msgid "Nothing"
@@ -90,8 +54,8 @@ msgid "False"
 msgstr "Falso"
 
 #: prefs.js:60
-msgid "Meneame Search Provider"
-msgstr "Buscador de Meneame"
+msgid "Filmaffinity Search Provider"
+msgstr "Buscador de Filmaffinity"
 
 #: prefs.js:65
 msgid "Version: "
@@ -159,6 +123,6 @@ msgstr "Preferencias"
 msgid "Search options"
 msgstr "Opciones de búsqueda"
 
-#: prefs.js:135
+#: prefs.js:130
 msgid "About"
 msgstr "Acerca de..."

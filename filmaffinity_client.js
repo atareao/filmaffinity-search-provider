@@ -1,26 +1,25 @@
 /*
- * Filmaffinity Search Provider
- * An extension to search videos in Filmaffinity with GNOME Shell
+ * This file is part of filmaffinity-search-provider
  *
- * Copyright (C) 2018
- * Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>,
- * https://www.atareao.es
+ * Copyright (c) 2018 Lorenzo Carbonell Cerezo <a.k.a. atareao>
  *
- * This file is part of Filmaffinity Search Provider
- * 
- * Filmaffinity Search Provider is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * Filmaffinity Search Provider is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * You should have received a copy of the GNU General Public License
- * along with this extensions.
- * If not, see <http://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
  */
 
 const GLib = imports.gi.GLib;
@@ -133,20 +132,20 @@ class FilmaffinityClient{
                                 let people  = data.substring(position_people_start, position_people_end).trim();
                                 let content =  '☆☆☆☆☆☆☆☆☆☆ (--) 👤 --';
                                 if(puntuation != '--'){
-                                    content = '☆'.repeat(10 - estrellas) + '★'.repeat(estrellas) + ' (' + puntuation + ') 👤 '+ people;
+                                    content =  '★'.repeat(estrellas) + '☆'.repeat(10 - estrellas) + ' (' + puntuation + ') 👤 '+ people;
                                 }
                                 if(position > -1 && results.length < 6)
                                 {
                                     if(!image_url.endsWith('.js'))
                                     {
                                         log('FFFF image_url: ' + image_url);
-                                        log('FFFF url: ' + _build_film_result_url(url));
+                                        log('FFFF url: ' + url);
                                         log('FFFF title: ' + title);
                                         log('FFFF content: ' + content);
                                         results.push({
                                             id: 'index_'+i,
                                             label: title,
-                                            url: _build_film_result_url(url),
+                                            url: url,
                                             description: content,
                                             thumbnail_url: image_url,
                                             thumbnail_width: 100,

@@ -139,7 +139,6 @@ class FilmaffinitySearchProvider{
                             }
                             let icon = new St.Icon({gicon: gicon,
                                                     style_class: 'filmaffinity-icon'});
-                                                    //icon_size: size});
                             icon.set_icon_size(150);
                             box.add_child(icon);
                             return box;

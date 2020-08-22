@@ -1,7 +1,7 @@
 {
   "description": "With Filmaffinity Search Provider you can search about films in Filmaffinity from GNOME Shell.", 
   "name": "Filmaffinity Search Provider", 
-  "shell-version": [3.36], 
+  "shell-version": ["3.36"], 
   "url": "https://gitlab.gnome.org/atareao/filmaffinity-search-provider.git", 
   "uuid": "filmaffinity-search-provider@atareao.es", 
   "gettext-domain": "filmaffinity-search-provider@atareao.es", 
